@@ -26,9 +26,25 @@ const expenseUpdateSchema = celebrate({
   params: uuidParam,
 });
 
+const orderSchema = Joi.object({
+  name: Joi.string().required().normalize(),
+});
+
+const orderCreateSchema = celebrate({
+  body: orderSchema,
+});
+
+const orderUpdateSchema = celebrate({
+  body: orderSchema,
+  params: uuidParam,
+});
+
 export default {
   loginSchema,
   uuidParam,
   expenseCreateSchema,
   expenseUpdateSchema,
+  orderCreateSchema,
+  orderUpdateSchema,
+  orderSchema,
 };
