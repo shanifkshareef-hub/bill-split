@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import { Logger } from "winston";
-import { Order, Prisma, PrismaClient } from "@prisma/client";
+import { Order, Participant, Prisma, PrismaClient } from "@prisma/client";
 
 @Service()
 export default class ParticipantsService {
@@ -9,36 +9,41 @@ export default class ParticipantsService {
     @Inject("prisma") private prisma: PrismaClient
   ) {}
 
-  public async List(): Promise<Order[]> {
+  public async List(): Promise<Participant[]> {
     this.logger.silly("🤵🤵 Listing Participants");
-    let Participants = await this.prisma.order.findMany();
+    let Participants = await this.prisma.participant.findMany();
 
     return Participants;
   }
 
-  public async Create(data: Prisma.OrderCreateInput): Promise<Order> {
-    this.logger.silly("🤵🤵 Listing orders");
+  public async Create(
+    data: Prisma.ParticipantCreateInput
+  ): Promise<Participant> {
+    this.logger.silly("🤵🤵 Creating participants");
 
-    let order = await this.prisma.order.create({ data });
-    return order;
+    let participant = await this.prisma.participant.create({ data });
+    return participant;
   }
 
   public async Update(
     id: string,
-    data: Prisma.OrderUpdateInput
-  ): Promise<Order> {
-    this.logger.silly("🤵🤵 Listing orders");
+    data: Prisma.ParticipantCreateInput
+  ): Promise<Participant> {
+    this.logger.silly("🤵🤵 Updating participants");
 
-    let order = await this.prisma.order.update({ where: { id }, data });
-    return order;
+    let participant = await this.prisma.participant.update({
+      where: { id },
+      data,
+    });
+    return participant;
   }
 
-  public async Delete(id: string): Promise<Order> {
-    this.logger.silly("🤵🤵 Deleting expenses");
+  public async Delete(id: string): Promise<Participant> {
+    this.logger.silly("🤵🤵 Deleting participants");
 
-    await this.prisma.order.findFirstOrThrow({ where: { id } });
+    await this.prisma.participant.findFirstOrThrow({ where: { id } });
 
-    let deleted = await this.prisma.order.delete({
+    let deleted = await this.prisma.participant.delete({
       where: {
         id,
       },
