@@ -1,6 +1,6 @@
 import { Inject, Service } from "typedi";
 import { Logger } from "winston";
-import { Order, Participant, Prisma, PrismaClient } from "@prisma/client";
+import { Participant, Prisma, PrismaClient } from "@prisma/client";
 
 @Service()
 export default class ParticipantsService {
