@@ -20,7 +20,7 @@ export default class ExpenseService {
   public async Create(
     data: Prisma.ExpenseTypeCreateInput
   ): Promise<Prisma.ExpenseType> {
-    this.logger.silly("🤵🤵 Listing expenses");
+    this.logger.silly("🤵🤵 Creting expenses");
 
     let expense = await this.prisma.expenseType.create({ data });
     return expense;
