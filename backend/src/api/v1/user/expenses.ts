@@ -27,6 +27,29 @@ export default (app: Router) => {
     }
   });
 
+  // Get an expenses group
+  route.get(
+    "/:id",
+    celebrate({ params: validation.uuidParam }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get("logger");
+      const id = req.params.id as string;
+
+      try {
+        const ExpenseServiceInstance = Container.get(ExpenseService);
+        const data = await ExpenseServiceInstance.Get(id);
+
+        return res.json({
+          status: true,
+          data,
+        });
+      } catch (e) {
+        logger.error("🔥 error: %o", e);
+        return next(e);
+      }
+    }
+  );
+
   // Create an expenses group
   route.post(
     "/",

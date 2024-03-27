@@ -17,6 +17,17 @@ export default class ExpenseService {
     return expenses;
   }
 
+  public async Get(id: string): Promise<Prisma.ExpenseType> {
+    this.logger.silly("🤵🤵 Reading expense");
+    let expense = await this.prisma.expenseType.findFirstOrThrow({
+      where: { id },
+      include: { orders: true, participants: true },
+    });
+    console.log("expense", expense);
+
+    return expense;
+  }
+
   public async Create(
     data: Prisma.ExpenseTypeCreateInput
   ): Promise<Prisma.ExpenseType> {
