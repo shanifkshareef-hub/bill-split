@@ -8,3 +8,4 @@ export const clearToken = () => {
 export function isAuthenticated(): boolean {
   return true;
 }
+

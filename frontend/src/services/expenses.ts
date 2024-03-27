@@ -27,7 +27,7 @@ const Update = (
 const Delete = (id: string): Promise<Resp<IExpense>> => {
   return request(`${HOST}/api/v1/expenses/${id}`, {
     method: "DELETE",
-  });   
+  });
 };
 
 export default {

@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { AppstoreOutlined } from "@ant-design/icons";
 
-import Logo from "@assets/logo.png";
 import Header from "@components/Header";
 import Sider from "@components/Sider";
 import { ItemType } from "antd/es/menu/hooks/useItems";
@@ -43,12 +42,6 @@ const Main = () => {
   return (
     <Layout className="h-full">
       <Sider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <img
-          src={Logo}
-          alt={"Contructly logo"}
-          className="logo h-16 w-16 m-auto pt-4"
-        />
-
         <Menu
           onSelect={({ key }) => {
             navigate(key);

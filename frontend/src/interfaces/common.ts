@@ -6,6 +6,7 @@ export interface Resp<T> {
 }
 
 export interface IExpense {
+  id: string;
   name: string;
   createdAt: string;
   orders: IOrder;
@@ -13,12 +14,14 @@ export interface IExpense {
 }
 
 export interface IOrder {
+  id: string;
   name: string;
   amount: number;
   createdAt: string;
 }
 
 export interface IParticipant {
+  id: string;
   name: string;
   amount: number;
   createdAt: string;
@@ -41,4 +44,11 @@ export namespace ParticipantForm {
   export interface Create {
     name: string;
   }
+}
+
+export interface CreateForm<T> {
+  isOpen: boolean;
+  callback(): void;
+  selected?: T;
+  toggleModal(): void;
 }

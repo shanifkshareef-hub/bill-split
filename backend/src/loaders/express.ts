@@ -51,8 +51,6 @@ export default ({ app }: { app: Express }) => {
     })
   );
 
-  app.use(middleware.rateLimiter);
-
   // app.use(passport.initialize());
   // middleware.auth(passport);
 
