@@ -7,6 +7,10 @@ const List = (): Promise<Resp<IExpense[]>> => {
   return request(`${HOST}/api/v1/expenses`);
 };
 
+const Get = (id: string): Promise<Resp<IExpense>> => {
+  return request(`${HOST}/api/v1/expenses`, { method: "GET", params: { id } });
+};
+
 const Create = (data: ExpenseForm.Create): Promise<Resp<IExpense>> => {
   return request(`${HOST}/api/v1/expenses`, {
     method: "POST",
@@ -32,6 +36,7 @@ const Delete = (id: string): Promise<Resp<IExpense>> => {
 
 export default {
   List,
+  Get,
   Create,
   Update,
   Delete,

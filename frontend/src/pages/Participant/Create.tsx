@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import Services from "@services/orders";
-import { IOrder, OrderForm } from "src/interfaces/common";
+import Services from "@services/participants";
+import {
+  IOrder,
+  IParticipant,
+  OrderForm,
+  ParticipantForm,
+} from "src/interfaces/common";
 import { Button, Form, Input, Modal, message } from "antd";
 
-export interface CreateOrder {
+export interface CreateParticipants {
   callback(): void;
-  selected?: IOrder;
-  icon: React.ReactNode;
+  selected?: IParticipant;
 }
-const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
+const CreateParticipants: React.FC<CreateParticipants> = ({
+  callback,
+  selected,
+}) => {
   const [isOpen, setOpen] = useState(false);
 
   const [form] = Form.useForm();
 
-  const handleSubmit = async (data: OrderForm.Create) => {
+  const handleSubmit = async (data: ParticipantForm.Create) => {
     if (selected) {
       const resp = await Services.Update(selected.id, data);
       if (resp && resp.status && resp.data) {
@@ -82,21 +89,11 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
           form={form}
         >
           <Form.Item
-            label="Order name"
+            label="Participant name"
             name="name"
             rules={[{ required: true, message: "Please enter the order name" }]}
           >
             <Input type="text" />
-          </Form.Item>
-
-          <Form.Item
-            label="Order amount"
-            name="name"
-            rules={[
-              { required: true, message: "Please enter the order amount" },
-            ]}
-          >
-            <Input type="number" />
           </Form.Item>
         </Form>
       </Modal>
@@ -104,4 +101,4 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
   );
 };
 
-export default CreateOrder;
+export default CreateParticipants;

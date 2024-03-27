@@ -10,7 +10,7 @@ export interface ListExpenses {
 const ListExpenses: React.FC<ListExpenses> = ({ expenses, setSelected }) => {
   return (
     <div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-4 gap-4">
         {expenses.map((obj) => {
           return (
             <div className="bg-gray-100 hover:bg-gray-200 rounded-md p-2">

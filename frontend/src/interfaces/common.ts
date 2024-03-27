@@ -9,7 +9,7 @@ export interface IExpense {
   id: string;
   name: string;
   createdAt: string;
-  orders: IOrder;
+  orders: IOrder[];
   participants: IParticipant[];
 }
 
