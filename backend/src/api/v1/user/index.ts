@@ -1,11 +1,11 @@
 import { Router } from "express";
-// import auth from "./auth";
 import users from "./users";
+import expenses from "./expenses";
 
 export default () => {
   const app = Router();
-  // auth(app);
   users(app);
+  expenses(app);
 
   return app;
 };

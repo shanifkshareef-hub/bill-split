@@ -13,7 +13,22 @@ const uuidParam = celebrate({
   },
 });
 
+const expenseSchema = Joi.object({
+  name: Joi.string().required().normalize(),
+});
+
+const expenseCreateSchema = celebrate({
+  body: expenseSchema,
+});
+
+const expenseUpdateSchema = celebrate({
+  body: expenseSchema,
+  params: uuidParam,
+});
+
 export default {
   loginSchema,
   uuidParam,
+  expenseCreateSchema,
+  expenseUpdateSchema,
 };
