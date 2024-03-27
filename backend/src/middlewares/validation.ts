@@ -43,7 +43,6 @@ const orderUpdateSchema = celebrate({
 
 const participantSchema = Joi.object({
   name: Joi.string().required().normalize(),
-  amount: Joi.number().required(),
   expenseTypeId: Joi.string().uuid().required(),
 });
 
