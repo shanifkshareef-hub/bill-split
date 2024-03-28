@@ -23,7 +23,7 @@ const Main = () => {
   ];
 
   return (
-    <Layout className="h-full">
+    <Layout className="h-full text-sm">
       <Sider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <Menu
           onSelect={({ key }) => {

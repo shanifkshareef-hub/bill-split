@@ -38,6 +38,9 @@ const ExpenseDetails = () => {
 
   return (
     <div>
+      <div className="pb-4">
+        <p className="font-semibold text-xl">Expenses Groups</p>
+      </div>
       {expense && (
         <div className="">
           <div className="">

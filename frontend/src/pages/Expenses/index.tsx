@@ -27,17 +27,28 @@ const Expenses = () => {
 
   return (
     <div>
-      <div className="w-fit ml-auto">
+      <div className="flex justify-between items-center">
+        <div className="">
+          <p className="font-semibold text-xl">Expenses Groups</p>
+        </div>
         <Button className="bg-white" onClick={toggleModal}>
           Create
         </Button>
       </div>
-      <ListExpenses expenses={expenses} setSelected={setSelected} />
+      <ListExpenses
+        expenses={expenses}
+        setSelected={(data) => {
+          setSelected(data);
+          toggleModal();
+        }}
+        callback={getExpenses}
+      />
 
       <Create
         callback={getExpenses}
         isOpen={isOpen}
         toggleModal={toggleModal}
+        selected={selected}
       />
     </div>
   );

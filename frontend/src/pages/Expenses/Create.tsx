@@ -7,8 +7,10 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
   callback,
   selected,
   toggleModal,
+  isOpen,
 }) => {
   const [form] = Form.useForm();
+  
   useEffect(() => {
     if (selected) {
       form.setFieldsValue({ name: selected.name });
@@ -21,11 +23,20 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
   };
 
   const handleSubmit = async (data: ExpenseForm.Create) => {
-    const resp = await Services.Create(data);
-    if (resp && resp.status && resp.data) {
-      closeModal();
-      callback();
-      message.success("Created Successfully");
+    if (selected) {
+      const resp = await Services.Update(selected.id, data);
+      if (resp && resp.status && resp.data) {
+        closeModal();
+        callback();
+        message.success("Created Successfully");
+      }
+    } else {
+      const resp = await Services.Create(data);
+      if (resp && resp.status && resp.data) {
+        closeModal();
+        callback();
+        message.success("Created Successfully");
+      }
     }
   };
 
@@ -42,6 +53,8 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
   return (
     <div>
       <Modal
+        open={isOpen}
+        title="Create an expense group"
         footer={
           <div className="flex justify-between items-center w-full">
             <div>
@@ -56,7 +69,7 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
                 Cancel
               </button>
 
-              <button className="btn--submit" form="id" type="submit">
+              <button className="btn--submit" form="expense-form" type="submit">
                 {selected ? "Update" : "Create"}
               </button>
             </div>
