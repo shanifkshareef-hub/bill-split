@@ -7,7 +7,7 @@
 
 ## About Bill Split Application 🏓
 
-The Bill Split Application is a simple web application that allows users to create 2-3 orders, add friends to each order, and then calculate and display the bill divided equally among the friends for each order.
+The Bill Split Application is a simple web application that allows users to create multiple orders, add friends to each order, and then calculate and display the bill divided equally among the friends for each order.
 
 
 Application URL
