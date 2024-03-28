@@ -12,7 +12,7 @@ const theme: Theme = {
     components: {
       Layout: {
         colorBgHeader: "#ffffff",
-        colorBgBody: "#e9edf2",
+        // colorBgBody: "#e9edf2",
         colorBgTrigger: "#d9d9d9",
       },
       Menu: {},

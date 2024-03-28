@@ -6,25 +6,32 @@ import { Button, Form, Input, Modal, message } from "antd";
 export interface CreateOrder {
   callback(): void;
   selected?: IOrder;
-  icon: React.ReactNode;
+  rendorer: React.ReactNode;
+  expenseId: string;
 }
-const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
+const CreateOrder: React.FC<CreateOrder> = ({
+  callback,
+  selected,
+  rendorer,
+  expenseId,
+}) => {
   const [isOpen, setOpen] = useState(false);
 
   const [form] = Form.useForm();
 
   const handleSubmit = async (data: OrderForm.Create) => {
+    data.expenseTypeId = expenseId;
     if (selected) {
       const resp = await Services.Update(selected.id, data);
       if (resp && resp.status && resp.data) {
         callback();
-        toggleModal();
+        closeModal();
       }
     } else {
       const resp = await Services.Create(data);
       if (resp && resp.status && resp.data) {
         callback();
-        toggleModal();
+        closeModal();
       }
     }
   };
@@ -50,8 +57,12 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
 
   return (
     <div>
-      <Button onClick={toggleModal}>Edit</Button>
+      <div className="cursor-pointer w-fit" onClick={toggleModal}>
+        {rendorer ?? <Button>Edit</Button>}
+      </div>
       <Modal
+        open={isOpen}
+        onCancel={closeModal}
         footer={
           <div className="flex justify-between items-center w-full">
             <div>
@@ -66,7 +77,7 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
                 Cancel
               </button>
 
-              <button className="btn--submit" form="id" type="submit">
+              <button className="btn--submit" form="order-form" type="submit">
                 {selected ? "Update" : "Create"}
               </button>
             </div>
@@ -78,7 +89,7 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
           onFinish={handleSubmit}
           autoComplete="off"
           layout="vertical"
-          id="expense-form"
+          id="order-form"
           form={form}
         >
           <Form.Item
@@ -91,7 +102,7 @@ const CreateOrder: React.FC<CreateOrder> = ({ callback, selected, icon }) => {
 
           <Form.Item
             label="Order amount"
-            name="name"
+            name="amount"
             rules={[
               { required: true, message: "Please enter the order amount" },
             ]}

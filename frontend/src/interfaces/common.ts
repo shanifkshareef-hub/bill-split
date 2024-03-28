@@ -37,12 +37,14 @@ export namespace OrderForm {
   export interface Create {
     name: string;
     amount: number;
+    expenseTypeId: string;
   }
 }
 
 export namespace ParticipantForm {
   export interface Create {
     name: string;
+    expenseTypeId: string;
   }
 }
 

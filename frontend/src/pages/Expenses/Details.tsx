@@ -4,6 +4,8 @@ import Services from "@services/expenses";
 import { IExpense } from "src/interfaces/common";
 import ListOrders from "@pages/Orders/ListOrders";
 import ListParticipants from "@pages/Participant/List";
+import CreateOrder from "@pages/Orders/CreateOrder";
+import CreateParticipants from "@pages/Participant/Create";
 
 const ExpenseDetails = () => {
   const { id } = useParams();
@@ -39,11 +41,25 @@ const ExpenseDetails = () => {
       {expense && (
         <div className="">
           <div className="">
-            <p className="font-semibold">Orders</p>
+            <div className="flex space-x-4">
+              <p className="font-semibold">Orders</p>
+              <CreateOrder
+                callback={getExpense}
+                rendorer={<p className="text-blue-400">Add +</p>}
+                expenseId={expense.id}
+              />
+            </div>
             <ListOrders callback={getExpense} orders={expense.orders} />
           </div>
-          <div className="font-semibold">
-            <p className="">Participants</p>
+          <div className="">
+            <div className="flex space-x-4">
+              <p className="font-semibold">Participants</p>
+              <CreateParticipants
+                callback={getExpense}
+                rendorer={<p className="text-blue-400">Add +</p>}
+                expenseId={expense.id}
+              />
+            </div>
             <ListParticipants
               callback={getExpense}
               participants={expense.participants}
@@ -52,14 +68,16 @@ const ExpenseDetails = () => {
 
           <div className="">
             <p className="font-semibold">Amount Splitted</p>
-            {expense.participants.map((obj) => {
-              return (
-                <div>
-                  <p className="">{obj.name}</p>
-                  <p className="">{`Rs ${getSplitedAmount()}`}</p>
-                </div>
-              );
-            })}
+            <div className="flex space-x-4">
+              {expense.participants.map((obj) => {
+                return (
+                  <div>
+                    <p className="">{obj.name}</p>
+                    <p className="">{`Rs ${getSplitedAmount()}`}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

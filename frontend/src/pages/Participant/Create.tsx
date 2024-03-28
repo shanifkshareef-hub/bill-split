@@ -11,27 +11,33 @@ import { Button, Form, Input, Modal, message } from "antd";
 export interface CreateParticipants {
   callback(): void;
   selected?: IParticipant;
+  rendorer: React.ReactNode;
+  expenseId: string;
 }
 const CreateParticipants: React.FC<CreateParticipants> = ({
   callback,
   selected,
+  expenseId,
+  rendorer,
 }) => {
   const [isOpen, setOpen] = useState(false);
 
   const [form] = Form.useForm();
 
   const handleSubmit = async (data: ParticipantForm.Create) => {
+    data.expenseTypeId = expenseId;
+
     if (selected) {
       const resp = await Services.Update(selected.id, data);
       if (resp && resp.status && resp.data) {
         callback();
-        toggleModal();
+        closeModal();
       }
     } else {
       const resp = await Services.Create(data);
       if (resp && resp.status && resp.data) {
         callback();
-        toggleModal();
+        closeModal();
       }
     }
   };
@@ -57,8 +63,12 @@ const CreateParticipants: React.FC<CreateParticipants> = ({
 
   return (
     <div>
-      <Button onClick={toggleModal}>Edit</Button>
+      <div className="cursor-pointer w-fit" onClick={toggleModal}>
+        {rendorer ?? <Button>Edit</Button>}
+      </div>
       <Modal
+        open={isOpen}
+        onCancel={closeModal}
         footer={
           <div className="flex justify-between items-center w-full">
             <div>
@@ -73,7 +83,11 @@ const CreateParticipants: React.FC<CreateParticipants> = ({
                 Cancel
               </button>
 
-              <button className="btn--submit" form="id" type="submit">
+              <button
+                className="btn--submit"
+                form="participant-form"
+                type="submit"
+              >
                 {selected ? "Update" : "Create"}
               </button>
             </div>
@@ -85,7 +99,7 @@ const CreateParticipants: React.FC<CreateParticipants> = ({
           onFinish={handleSubmit}
           autoComplete="off"
           layout="vertical"
-          id="expense-form"
+          id="participant-form"
           form={form}
         >
           <Form.Item

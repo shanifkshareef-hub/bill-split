@@ -8,7 +8,7 @@ const List = (): Promise<Resp<IExpense[]>> => {
 };
 
 const Get = (id: string): Promise<Resp<IExpense>> => {
-  return request(`${HOST}/api/v1/expenses`, { method: "GET", params: { id } });
+  return request(`${HOST}/api/v1/expenses/${id}`);
 };
 
 const Create = (data: ExpenseForm.Create): Promise<Resp<IExpense>> => {

@@ -17,25 +17,8 @@ const Main = () => {
   const menuItems: ItemType[] = [
     {
       icon: <AppstoreOutlined />,
-      key: "/app/dashboard",
-      label: "Dashboard",
-    },
-    {
-      icon: <AppstoreOutlined />,
-      key: "/app/menu",
-      label: "Menu",
-      children: [
-        {
-          icon: <AppstoreOutlined />,
-          key: "/app/menu/submenu1",
-          label: "SubMenu1",
-        },
-        {
-          icon: <AppstoreOutlined />,
-          key: "/app/menu/submenu2",
-          label: "SubMenu2",
-        },
-      ],
+      key: "/app/expenses",
+      label: "Expenses",
     },
   ];
 

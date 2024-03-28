@@ -26,6 +26,10 @@ const routes: RouteObject[] = [
       },
     ],
   },
+  {
+    path: "*",
+    element: <Navigate to={"/app/expenses"} />,
+  },
 ];
 
 export default routes;
