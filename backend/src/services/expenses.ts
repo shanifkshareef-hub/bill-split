@@ -12,7 +12,9 @@ export default class ExpenseService {
 
   public async List(): Promise<Prisma.ExpenseType[]> {
     this.logger.silly("🤵🤵 Listing expenses");
-    let expenses = await this.prisma.expenseType.findMany();
+    let expenses = await this.prisma.expenseType.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
     return expenses;
   }
@@ -23,7 +25,6 @@ export default class ExpenseService {
       where: { id },
       include: { orders: true, participants: true },
     });
-    console.log("expense", expense);
 
     return expense;
   }

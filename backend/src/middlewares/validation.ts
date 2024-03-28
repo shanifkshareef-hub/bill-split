@@ -23,7 +23,9 @@ const expenseCreateSchema = celebrate({
 
 const expenseUpdateSchema = celebrate({
   body: expenseSchema,
-  params: uuidParam,
+  params: {
+    id: Joi.string().uuid().required(),
+  },
 });
 
 const orderSchema = Joi.object({
@@ -38,7 +40,9 @@ const orderCreateSchema = celebrate({
 
 const orderUpdateSchema = celebrate({
   body: orderSchema,
-  params: uuidParam,
+  params: {
+    id: Joi.string().uuid().required(),
+  },
 });
 
 const participantSchema = Joi.object({
@@ -52,7 +56,9 @@ const participantCreateSchema = celebrate({
 
 const participantUpdateSchema = celebrate({
   body: participantSchema,
-  params: uuidParam,
+  params: {
+    id: Joi.string().uuid().required(),
+  },
 });
 
 export default {

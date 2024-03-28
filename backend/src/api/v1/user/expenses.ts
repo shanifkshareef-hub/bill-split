@@ -3,7 +3,6 @@ import { Logger } from "winston";
 import { Container } from "typedi";
 import ExpenseService from "../../../services/expenses";
 import validation from "../../../middlewares/validation";
-import { celebrate } from "celebrate";
 
 const route = Router();
 
@@ -30,12 +29,12 @@ export default (app: Router) => {
   // Get an expenses group
   route.get(
     "/:id",
-    celebrate({ params: validation.uuidParam }),
+    validation.uuidParam,
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get("logger");
-      const id = req.params.id as string;
 
       try {
+        const { id } = req.params;
         const ExpenseServiceInstance = Container.get(ExpenseService);
         const data = await ExpenseServiceInstance.Get(id);
 
@@ -77,8 +76,8 @@ export default (app: Router) => {
     validation.expenseUpdateSchema,
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get("logger");
+      const { id } = req.params;
       try {
-        let id = req.params.id as string;
         const ExpenseServiceInstance = Container.get(ExpenseService);
         const data = await ExpenseServiceInstance.Update(id, req.body);
 
@@ -96,9 +95,7 @@ export default (app: Router) => {
   // Delete an expenses group
   route.delete(
     "/:id",
-    celebrate({
-      params: validation.uuidParam,
-    }),
+    validation.uuidParam,
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get("logger");
       try {
