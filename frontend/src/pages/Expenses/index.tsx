@@ -28,12 +28,15 @@ const Expenses = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div className="">
+        <div className="flex space-x-4 items-center">
           <p className="font-semibold text-xl">Expenses Groups</p>
+          <p
+            onClick={toggleModal}
+            className="text-blue-500 hover:text-blue-400 cursor-pointer"
+          >
+            Add +
+          </p>
         </div>
-        <Button className="bg-white" onClick={toggleModal}>
-          Create
-        </Button>
       </div>
       <ListExpenses
         expenses={expenses}

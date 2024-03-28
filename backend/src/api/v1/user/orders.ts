@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from "express";
 import { Logger } from "winston";
 import { Container } from "typedi";
 import validation from "../../../middlewares/validation";
-import { celebrate } from "celebrate";
 import OrderService from "../../../services/orders";
 
 const route = Router();
@@ -10,8 +9,8 @@ const route = Router();
 export default (app: Router) => {
   app.use("/orders", route);
 
-  // Get all orders 
-    route.get("/", async (_req: Request, res: Response, next: NextFunction) => {
+  // Get all orders
+  route.get("/", async (_req: Request, res: Response, next: NextFunction) => {
     const logger: Logger = Container.get("logger");
     try {
       const OrderServiceInstance = Container.get(OrderService);
@@ -27,8 +26,8 @@ export default (app: Router) => {
     }
   });
 
-  // Create an orders 
-    route.post(
+  // Create an orders
+  route.post(
     "/",
     validation.orderCreateSchema,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -48,8 +47,8 @@ export default (app: Router) => {
     }
   );
 
-  // Update an orders 
-    route.put(
+  // Update an orders
+  route.put(
     "/:id",
     validation.orderUpdateSchema,
     async (req: Request, res: Response, next: NextFunction) => {
@@ -70,12 +69,10 @@ export default (app: Router) => {
     }
   );
 
-  // Delete an orders 
-    route.delete(
+  // Delete an orders
+  route.delete(
     "/:id",
-    celebrate({
-      params: validation.uuidParam,
-    }),
+    validation.uuidParam,
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get("logger");
       try {

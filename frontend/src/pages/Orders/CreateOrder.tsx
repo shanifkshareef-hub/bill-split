@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Services from "@services/orders";
 import { IOrder, OrderForm } from "src/interfaces/common";
 import { Button, Form, Input, Modal, message } from "antd";
@@ -18,6 +18,12 @@ const CreateOrder: React.FC<CreateOrder> = ({
   const [isOpen, setOpen] = useState(false);
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (selected) {
+      form.setFieldsValue({ name: selected.name, amount: selected.amount });
+    }
+  }, [selected]);
 
   const handleSubmit = async (data: OrderForm.Create) => {
     data.expenseTypeId = expenseId;
@@ -64,14 +70,8 @@ const CreateOrder: React.FC<CreateOrder> = ({
         open={isOpen}
         onCancel={closeModal}
         footer={
-          <div className="flex justify-between items-center w-full">
-            <div>
-              {selected && (
-                <Button className="btn-danger" onClick={handleDelete}>
-                  Delete
-                </Button>
-              )}
-            </div>
+          <div className="flex justify-end items-center w-full">
+            
             <div className="flex space-x-4">
               <button className="btn--cancel" onClick={closeModal}>
                 Cancel

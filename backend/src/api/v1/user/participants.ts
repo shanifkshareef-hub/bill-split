@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from "express";
 import { Logger } from "winston";
 import { Container } from "typedi";
 import validation from "../../../middlewares/validation";
-import { celebrate } from "celebrate";
 import ParticipantService from "../../../services/participants";
 
 const route = Router();
@@ -73,9 +72,7 @@ export default (app: Router) => {
   // Delete an participants
   route.delete(
     "/:id",
-    celebrate({
-      params: validation.uuidParam,
-    }),
+    validation.uuidParam,
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get("logger");
       try {

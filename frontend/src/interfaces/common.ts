@@ -17,6 +17,8 @@ export interface IOrder {
   id: string;
   name: string;
   amount: number;
+  expenseType: IExpense;
+  expenseTypeId: string;
   createdAt: string;
 }
 
@@ -24,6 +26,8 @@ export interface IParticipant {
   id: string;
   name: string;
   amount: number;
+  expenseType: IExpense;
+  expenseTypeId: string;
   createdAt: string;
 }
 

@@ -6,6 +6,7 @@ import ListOrders from "@pages/Orders/ListOrders";
 import ListParticipants from "@pages/Participant/List";
 import CreateOrder from "@pages/Orders/CreateOrder";
 import CreateParticipants from "@pages/Participant/Create";
+import { Avatar, Empty, List } from "antd";
 
 const ExpenseDetails = () => {
   const { id } = useParams();
@@ -23,66 +24,92 @@ const ExpenseDetails = () => {
     }
   };
 
-  const getSplitedAmount = () => {
+  const getAmount = (type: "TOTAL" | "SPLIT") => {
     if (!expense) return;
 
-    const count = expense.orders.length;
+    const count = expense.participants.length;
     let amount = 0;
-
     expense.orders.forEach((obj) => {
       amount = amount + obj.amount;
     });
 
-    return amount / count;
+    return type === "SPLIT" ? Math.round(amount / count) : amount;
   };
 
   return (
     <div>
-      <div className="pb-4">
-        <p className="font-semibold text-xl">Expenses Groups</p>
-      </div>
-      {expense && (
-        <div className="">
-          <div className="">
-            <div className="flex space-x-4">
-              <p className="font-semibold">Orders</p>
-              <CreateOrder
+      {expense ? (
+        <>
+          <div className="pb-4">
+            <p className="font-semibold text-xl">{expense.name}</p>
+          </div>
+          <div className="space-y-4">
+            <div className="">
+              <div className="flex space-x-4">
+                <p className="font-semibold">Orders</p>
+                <CreateOrder
+                  callback={getExpense}
+                  rendorer={<p className="text-blue-400">Add +</p>}
+                  expenseId={expense.id}
+                />
+              </div>
+              <ListOrders callback={getExpense} orders={expense.orders} />
+            </div>
+            <div className="border-t border-gray-300 py-4">
+              <div className="flex space-x-4">
+                <p className="font-semibold">Participants</p>
+                <CreateParticipants
+                  callback={getExpense}
+                  rendorer={<p className="text-blue-400">Add +</p>}
+                  expenseId={expense.id}
+                />
+              </div>
+              <ListParticipants
                 callback={getExpense}
-                rendorer={<p className="text-blue-400">Add +</p>}
-                expenseId={expense.id}
+                participants={expense.participants}
               />
             </div>
-            <ListOrders callback={getExpense} orders={expense.orders} />
-          </div>
-          <div className="">
-            <div className="flex space-x-4">
-              <p className="font-semibold">Participants</p>
-              <CreateParticipants
-                callback={getExpense}
-                rendorer={<p className="text-blue-400">Add +</p>}
-                expenseId={expense.id}
-              />
-            </div>
-            <ListParticipants
-              callback={getExpense}
-              participants={expense.participants}
-            />
-          </div>
 
-          <div className="">
-            <p className="font-semibold">Amount Splitted</p>
-            <div className="flex space-x-4">
-              {expense.participants.map((obj) => {
-                return (
-                  <div>
-                    <p className="">{obj.name}</p>
-                    <p className="">{`Rs ${getSplitedAmount()}`}</p>
-                  </div>
-                );
-              })}
+            <div className="w-1/4">
+              <p className="font-semibold">Amount</p>
+              <div className="bg-white mt-2">
+                <div className="border-b  border-gray-200 p-2">
+                  <p className="font-semibold">Total Amount</p>
+                  <p className="">{`₹ ${getAmount("TOTAL")}`}</p>
+                </div>
+              </div>
+
+              <List
+                className=" bg-white p-2 "
+                itemLayout="horizontal"
+                dataSource={expense.participants.map((obj) => ({
+                  title: obj.name,
+                  amount: `₹  ${getAmount("SPLIT")}`,
+                }))}
+                renderItem={(item, index) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar
+                          src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
+                        />
+                      }
+                      title={<a href="https://ant.design">{item.title}</a>}
+                      description={
+                        <div className="flex justify-between">
+                          <p className="">Amount</p>
+                          <p className="">{item.amount}</p>
+                        </div>
+                      }
+                    />
+                  </List.Item>
+                )}
+              />
             </div>
           </div>
-        </div>
+        </>
+      ) : (
+        <Empty />
       )}
     </div>
   );

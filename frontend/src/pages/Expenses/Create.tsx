@@ -10,7 +10,7 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
   isOpen,
 }) => {
   const [form] = Form.useForm();
-  
+
   useEffect(() => {
     if (selected) {
       form.setFieldsValue({ name: selected.name });
@@ -56,14 +56,7 @@ export const Create: React.FC<CreateForm<IExpense>> = ({
         open={isOpen}
         title="Create an expense group"
         footer={
-          <div className="flex justify-between items-center w-full">
-            <div>
-              {selected && (
-                <Button className="btn-danger" onClick={handleDelete}>
-                  Delete
-                </Button>
-              )}
-            </div>
+          <div className="flex justify-end items-center w-full">
             <div className="flex space-x-4">
               <button className="btn--cancel" onClick={closeModal}>
                 Cancel

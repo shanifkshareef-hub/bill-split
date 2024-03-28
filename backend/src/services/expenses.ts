@@ -23,7 +23,10 @@ export default class ExpenseService {
     this.logger.silly("🤵🤵 Reading expense");
     let expense = await this.prisma.expenseType.findFirstOrThrow({
       where: { id },
-      include: { orders: true, participants: true },
+      include: {
+        orders: { orderBy: { createdAt: "desc" } },
+        participants: { orderBy: { createdAt: "desc" } },
+      },
     });
 
     return expense;
